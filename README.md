@@ -10,7 +10,7 @@
 ## 🎯 Features
 
 ### 💻 IDE Workspace & Files
-- **Semantic AST Search & Line-Jumping** — Concept-aware code search that supports direct line-jumping to matching target files.
+- **Code search & Line-Jumping** — Embedding-based code search is implemented as a separate index; it is not the same as the exact AST search in the minimal research prototype.
 - **Complexity Analyzer** — Detailed maintainability indexes, Halstead metrics, and cyclomatic complexity scoring.
 - **Drag-and-Drop File System** — High-performance file tree navigation supporting instant drag-and-drop workspace uploads.
 
@@ -24,7 +24,7 @@
 
 ### 📊 Runtime & Visualizations
 - **Code execution** — Restricted Docker execution code with an OnlineCompiler.io fallback when Docker is unavailable. The fallback sends code to an external service; the current Docker options do not establish a hardened security sandbox.
-- **Line-by-Line Code Visualizer** — Safe tracing of Python code, dynamically rendering variable states and call stacks frame-by-frame.
+- **Python execution tracing** — Tracing and visualization modules are present in source; their safety and end-to-end correctness have not been independently validated.
 - **Algorithm Visualizer** — Animated step-by-step visualizations of 14 key sorting, graph, and recursion algorithms.
 
 ## 🧠 Algorithm Visualizer
@@ -87,7 +87,7 @@ Open **`http://localhost:5173`** in your browser.
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 MAX_EXECUTION_STEPS=500     # Limit for variable tracer steps (default: 500)
-MAX_EXECUTION_TIMEOUT=5     # Execution timeout limit in seconds (default: 5)
+MAX_EXECUTION_TIMEOUT=10    # Execution timeout limit in seconds (default: 10)
 
 # Production fallbacks (Render cloud environment)
 ONLINE_COMPILER_KEY=your_onlinecompiler_io_api_key_here
@@ -108,17 +108,17 @@ VITE_API_URL=http://localhost:8000  # Leave blank to automatically use local fal
 codemind-ide/
 ├── backend/
 │   ├── data/                # SQLite DBs (Reviews, RAG Memory) & JSON vector store
-│   ├── models/              # Local offline bug classifier ML models
+│   ├── models/              # Model-related assets (verify availability and provenance)
 │   ├── main.py              # FastAPI entry point
 │   ├── models.py            # Pydantic schemas for requests/responses
 │   ├── routers/ai.py        # API endpoints for AI and visualization
 │   └── services/
 │       ├── llm.py           # Gemini AI integration (Review, Fix, Explain)
 │       ├── test.py          # Automated unit test generation framework
-│       ├── code_tracer.py   # Safe Python execution and variable tracing
-│       ├── code_executor.py # Dockerized secure code execution
+│       ├── code_tracer.py   # Python execution tracing module (not security-validated)
+│       ├── code_executor.py # Restricted Docker execution and remote fallback
 │       ├── code_indexer.py  # Semantic search indexing (JSON Vector Store)
-│       ├── rag_pipeline.py  # RAG retrieval and context building
+│       ├── rag_pipeline.py  # Exact/recent review-memory retrieval
 │       ├── complexity_analyzer.py # Static code complexity analysis 
 │       └── review_history.py # SQLite service for storing code reviews
 └── frontend/
