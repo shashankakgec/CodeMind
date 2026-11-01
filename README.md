@@ -56,18 +56,16 @@
 
 ### 1. Run the Backend
 ```bash
-cd backend
-python -m venv venv
+python -m venv .venv
 
 # Activate Virtual Environment (Windows)
 venv\Scripts\activate
 # Activate Virtual Environment (macOS/Linux)
-source venv/bin/activate
+source .venv/bin/activate
 
-pip install -r requirements.txt
-cp .env.example .env
-# Edit .env and paste your GEMINI_API_KEY
-
+pip install -r backend/requirements.txt
+cp backend/.env.example backend/.env
+# Add provider credentials to backend/.env
 uvicorn backend.main:app --reload --port 8000
 ```
 
