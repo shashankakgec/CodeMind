@@ -41,7 +41,8 @@ A module's presence does not prove end-to-end operation, local hosting, project 
 - Review-history retrieval is based on code hash and language, not a project identifier.
 - The JSON vector index stores filename/language metadata without a project membership boundary.
 - API review-history endpoints were not found to have an authentication boundary during source inspection.
-- Before multi-user/client deployment, implement authenticated project ownership, per-project retrieval filters, authorization checks on every read/write/delete endpoint, and cross-project access tests.
+- backend/main.py configures CORS with allow_origins=[\"*\"], allow_methods=[\"*\"], and allow_headers=[\"*\"]. CORS is not authentication; production origins should be allow-listed.
+- Before multi-user/client deployment, implement authenticated project ownership, per-project retrieval filters, authorization checks on every read/write/delete endpoint, restricted CORS, and cross-project access tests.
 
 ### P1 — Classifier metric reporting
 - Runtime status previously returned fixed accuracy and macro-F1 constants.
